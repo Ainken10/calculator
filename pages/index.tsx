@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import ButtonGroup from "../components/ButtonGroup";
 import CalculatorWrapper from "../components/CalculatorWrapper";
 import DisplayScreen from "../components/DisplayScreen";
+
 interface calc {
   sign: string;
   num: number | any;
@@ -17,11 +18,7 @@ export default function Home() {
     num: 0,
     res: 0,
   });
-  // let [calc, setCalc] = useState({
-  //   sign: "",
-  //   num: 0,
-  //   res: 0,
-  // });
+
 
   const commaClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -50,7 +47,7 @@ export default function Home() {
           ? a + b
           : sign === "-"
           ? a - b
-          : sign === "X"
+          : sign === "*"
           ? a * b
           : a / b;
 
@@ -68,8 +65,8 @@ export default function Home() {
   const numClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const value = e.currentTarget.value;
-  
-    if (calc.num.toString().length < 11) {
+
+    if (value) {
       setCalc({
         ...calc,
         num:
@@ -87,8 +84,8 @@ export default function Home() {
     setCalc({
       ...calc,
       num: calc.num ? calc.num * -1 : 0,
-      res: calc.res ? calc.res * -1 : 0,
-      sign: "",
+      res: calc.res ? calc.res  : 0,
+      sign: calc.sign ? calc.sign :"",
     });
   };
   const percentClickHandler = () => {
@@ -112,20 +109,19 @@ export default function Home() {
   };
 
   const saveToMemory = (numberToBeSaved: calc) => {
-
+  
+   
     fetch("/api/memory", {
       method: "POST",
       body:JSON.stringify({
-        numberToBeSaved: numberToBeSaved.num,
+        numberToBeSaved:  numberToBeSaved.num 
+        ? numberToBeSaved.num  
+        :numberToBeSaved.res 
       }),
       headers: {
         'Content-Type': 'application/json'
    }
-    }).then((results) =>
-      results.json().then((data) => {
-        console.log("memory in"+data.numberToBeSaved);
-      })
-    );
+    })
   };
 
   const getFromMemory = () => {
@@ -135,16 +131,16 @@ export default function Home() {
     }).then((results) =>
       results.json().then((data) => {
         const numberToBeSet = data.numberFromMemory
-       
-        if (numberToBeSet.toString().length < 11) {
+    
+        if ( numberToBeSet) {
           setCalc({
             ...calc,
             num:
               calc.num === 0 && numberToBeSet === "0"
                 ? "0"
                 : calc.num % 1 === 0
-                ? Number(calc.num + numberToBeSet)
-                : calc.num + numberToBeSet,
+                ? Number(numberToBeSet)
+                : numberToBeSet,
             res: !calc.sign ? 0 : calc.res,
           });
         }
@@ -153,25 +149,34 @@ export default function Home() {
     );
   };
 
+  let ddd = calc.sign
+  ? <p>{calc.res}{calc.sign} </p>
+  : calc.sign && calc.num 
+  ? <p>{calc.res}{calc.sign}{calc.num} </p>
+  : <p>as</p>
+   
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div className="flex flex-col items-center justify-center min-h-screen py-2   ">
       <Head>
         <title>Calculator for Tappointment</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <CalculatorWrapper>
-        <DisplayScreen number={calc.num ? calc.num : calc.res} />
+
+
+        <DisplayScreen number={calc.res ? calc.res+calc.sign+(calc.num ? calc.num : "") : calc.num} />
         <ButtonGroup>
           <Button
-            value="Mem in"
+            value="M+"
             className="w-[150px] h-12 mx-2 font-semibold  text-white rounded-lg border-white border-2 bg-emerald-400 transition hover:bg-emerald-500 focus:border-emerald-400 "
             onClick={() => {
               saveToMemory(calc);
             }}
           />
           <Button
-            value="Mem out"
+            value="M-"
             className="w-[150px] h-12 mx-2 font-semibold  text-white rounded-lg border-white border-2 bg-emerald-400 transition hover:bg-emerald-500 focus:border-emerald-400 "
             onClick={() => {
               getFromMemory()
@@ -231,7 +236,7 @@ export default function Home() {
           />
           {/* Alap müvelet -signClickHandler */}
           <Button
-            value="X"
+            value="*"
             className="w-1/5 h-12 mx-2 font-semibold   text-white rounded-lg border-white border-2 bg-green-400 transition hover:bg-green-500  focus:border-green-400"
             onClick={(e) => {
               signClickHandler(e);
