@@ -8,7 +8,7 @@ interface props {
 
 const Button: React.FC<props> = ({ className, value, onClick }) => {
   return (
-    <button value={value} className={className+" shadow-lg "} onClick={(e) => onClick(e)}>
+    <button value={value} className={`${className} mx-2 font-semibold h-12  text-white rounded-lg border-white border-2 shadow-lg `} onClick={(e) => onClick(e)}>
       {value}
     </button>
   );
