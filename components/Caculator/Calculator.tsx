@@ -110,7 +110,7 @@ export default function Calculator() {
 
   const saveToMemory = (numberToBeSaved: calc) => {
   
-    fetch("/api/memory", {
+    fetch(`${process.env.VERCEL_URL}/api/memory`, {
       method: "POST",
       body:JSON.stringify({
         numberToBeSaved:  numberToBeSaved.num 
@@ -125,7 +125,7 @@ export default function Calculator() {
 
   const getFromMemory = () => {
  
-    fetch("/api/memory", {
+    fetch(`${process.env.VERCEL_URL}/api/memory`, {
       method: "GET",
     }).then((results) =>
       results.json().then((data) => {
@@ -213,14 +213,14 @@ export default function Calculator() {
             onClick={(e) => numClickHandler(e)}
           />
           <Button
-            className="w-1/5   transition hover:bg-blue-500  focus:bg-blue-500 focus:border-blue-500"
+            className="w-1/5      hover:bg-blue-500  focus:bg-blue-500 focus:border-blue-500"
             value="8"
             onClick={(e) => {
               numClickHandler(e);
             }}
           />
           <Button
-            className="w-1/5   transition hover:bg-blue-500  focus:bg-blue-500 focus:border-blue-500"
+            className="w-1/5      hover:bg-blue-500  focus:bg-blue-500 focus:border-blue-500"
             value="9"
             onClick={(e) => {
               numClickHandler(e);
@@ -229,28 +229,28 @@ export default function Calculator() {
           {/* Alap müvelet -signClickHandler */}
           <Button
             value="*"
-            className="w-1/5   bg-green-400 transition hover:bg-green-500  focus:border-green-400"
+            className="w-1/5   bg-green-400    hover:bg-green-500  focus:border-green-400"
             onClick={(e) => {
               signClickHandler(e);
             }}
           />
           {/* Szám gombok - numClickHandler */}
           <Button
-            className="w-1/5   transition hover:bg-blue-500  focus:bg-blue-500 focus:border-blue-500"
+            className="w-1/5      hover:bg-blue-500  focus:bg-blue-500 focus:border-blue-500"
             value="4"
             onClick={(e) => {
               numClickHandler(e);
             }}
           />
           <Button
-            className="w-1/5   transition hover:bg-blue-500  focus:bg-blue-500 focus:border-blue-500"
+            className="w-1/5      hover:bg-blue-500  focus:bg-blue-500 focus:border-blue-500"
             value="5"
             onClick={(e) => {
               numClickHandler(e);
             }}
           />
           <Button
-            className="w-1/5   transition hover:bg-blue-500  focus:bg-blue-500 focus:border-blue-500"
+            className="w-1/5      hover:bg-blue-500  focus:bg-blue-500 focus:border-blue-500"
             value="6"
             onClick={(e) => {
               numClickHandler(e);
@@ -259,28 +259,28 @@ export default function Calculator() {
           {/* Alap müvelet -signClickHandler */}
           <Button
             value="-"
-            className="w-1/5   bg-green-400 transition hover:bg-green-500 focus:border-green-400"
+            className="w-1/5   bg-green-400    hover:bg-green-500 focus:border-green-400"
             onClick={(e) => {
               signClickHandler(e);
             }}
           />
           {/*  Szám gombok - numClickHandler */}
           <Button
-            className="w-1/5   transition hover:bg-blue-500 focus:bg-blue-500 focus:border-blue-500"
+            className="w-1/5      hover:bg-blue-500 focus:bg-blue-500 focus:border-blue-500"
             value="1"
             onClick={(e) => {
               numClickHandler(e);
             }}
           />
           <Button
-            className="w-1/5   transition hover:bg-blue-500 focus:bg-blue-500 focus:border-blue-500"
+            className="w-1/5      hover:bg-blue-500 focus:bg-blue-500 focus:border-blue-500"
             value="2"
             onClick={(e) => {
               numClickHandler(e);
             }}
           />
           <Button
-            className="w-1/5   transition hover:bg-blue-500 focus:bg-blue-500 focus:border-blue-500"
+            className="w-1/5      hover:bg-blue-500 focus:bg-blue-500 focus:border-blue-500"
             value="3"
             onClick={(e) => {
               numClickHandler(e);
@@ -289,7 +289,7 @@ export default function Calculator() {
           {/* Alap müvelet -signClickHandler */}
           <Button
             value="+"
-            className="w-1/5  bg-green-400 transition hover:bg-green-500 focus:border-green-400"
+            className="w-1/5  bg-green-400    hover:bg-green-500 focus:border-green-400"
             onClick={(e) => {
               signClickHandler(e);
             }}
@@ -297,14 +297,14 @@ export default function Calculator() {
           {/* pont - commaClickHandler */}
           <Button
             value="."
-            className="w-[25%]   bg-violet-400 transition hover:bg-violet-500 focus:border-violet-400"
+            className="w-[25%]   bg-violet-400    hover:bg-violet-500 focus:border-violet-400"
             onClick={(e) => {
               commaClickHandler(e);
             }}
           />
           {/* Szám gomb - numClickHandler */}
           <Button
-            className="w-[25%]  transition hover:bg-blue-500 focus:bg-blue-500 focus:border-blue-500"
+            className="w-[25%]     hover:bg-blue-500 focus:bg-blue-500 focus:border-blue-500"
             value="0"
             onClick={(e) => {
               numClickHandler(e);
@@ -313,7 +313,7 @@ export default function Calculator() {
           {/* egyenlő gomb - equalsClickHandler */}
           <Button
             value="="
-            className="w-[35%]  bg-red-400 transition hover:bg-red-500 focus:border-red-400"
+            className="w-[35%]  bg-red-400    hover:bg-red-500 focus:border-red-400"
             onClick={() => {
               equalsClickHandler();
             }}
