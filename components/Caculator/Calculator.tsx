@@ -19,7 +19,6 @@ export default function Calculator() {
     res: 0,
   });
 
-
   const commaClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const value = e.currentTarget.value;
@@ -84,8 +83,8 @@ export default function Calculator() {
     setCalc({
       ...calc,
       num: calc.num ? calc.num * -1 : 0,
-      res: calc.res ? calc.res  : 0,
-      sign: calc.sign ? calc.sign :"",
+      res: calc.res ? calc.res : 0,
+      sign: calc.sign ? calc.sign : "",
     });
   };
   const percentClickHandler = () => {
@@ -109,29 +108,27 @@ export default function Calculator() {
   };
 
   const saveToMemory = (numberToBeSaved: calc) => {
-  
-    fetch("api/memory", {
+    fetch("api/memory/savenumber", {
       method: "POST",
-      body:JSON.stringify({
-        numberToBeSaved:  numberToBeSaved.num 
-        ? numberToBeSaved.num  
-        :numberToBeSaved.res 
+      body: JSON.stringify({
+        numberToBeSaved: numberToBeSaved.num
+          ? numberToBeSaved.num
+          : numberToBeSaved.res,
       }),
       headers: {
-        'Content-Type': 'application/json'
-   }
-    })
+        "Content-Type": "application/json",
+      },
+    });
   };
 
   const getFromMemory = () => {
- 
-    fetch("api/memory", {
+    fetch("api/memory/getnumber", {
       method: "GET",
     }).then((results) =>
       results.json().then((data) => {
-        const numberToBeSet = data.numberFromMemory
-    
-        if ( numberToBeSet) {
+        const numberToBeSet = data.numberFromMemory;
+
+        if (numberToBeSet) {
           setCalc({
             ...calc,
             num:
@@ -143,7 +140,6 @@ export default function Calculator() {
             res: !calc.sign ? 0 : calc.res,
           });
         }
-    
       })
     );
   };
@@ -156,9 +152,13 @@ export default function Calculator() {
       </Head>
 
       <CalculatorWrapper>
-
-
-        <DisplayScreen number={calc.res ? calc.res+calc.sign+(calc.num ? calc.num : "") : calc.num} />
+        <DisplayScreen
+          number={
+            calc.res
+              ? calc.res + calc.sign + (calc.num ? calc.num : "")
+              : calc.num
+          }
+        />
         <ButtonGroup>
           <Button
             value="M+"
@@ -171,7 +171,7 @@ export default function Calculator() {
             value="M-"
             className="w-[150px] bg-emerald-400 transition hover:bg-emerald-500 focus:border-emerald-400 "
             onClick={() => {
-              getFromMemory()
+              getFromMemory();
             }}
           />
           {/* C gomb = restelünk - resetClickHandler */}

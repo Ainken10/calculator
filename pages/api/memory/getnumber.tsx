@@ -1,21 +1,16 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import { MemoryHandler } from "../../Utils/MemoryHandler";
+import { MemoryHandler } from "../../../Utils/MemoryHandler";
 
 export default function memoryHandler(req, res) {
   const memoryHandler = new MemoryHandler();
-  const { numberToBeSaved } = req.body;
+
   const { method } = req;
 
   switch (method) {
     case "GET":
       let numberFromMemory = memoryHandler.GetFromMemory();
       res.status(200).json({ numberFromMemory });
-      break;
-
-    case "POST":
-      memoryHandler.SaveToMemory(numberToBeSaved);
-      res.status(200).json({ success: true });
       break;
 
     default:
