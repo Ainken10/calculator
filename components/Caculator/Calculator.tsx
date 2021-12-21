@@ -110,7 +110,7 @@ export default function Calculator() {
 
   const saveToMemory = (numberToBeSaved: calc) => {
   
-    fetch(`${process.env.VERCEL_URL}/api/memory`, {
+    fetch("api/memory", {
       method: "POST",
       body:JSON.stringify({
         numberToBeSaved:  numberToBeSaved.num 
@@ -125,7 +125,7 @@ export default function Calculator() {
 
   const getFromMemory = () => {
  
-    fetch(`${process.env.VERCEL_URL}/api/memory`, {
+    fetch("api/memory", {
       method: "GET",
     }).then((results) =>
       results.json().then((data) => {
